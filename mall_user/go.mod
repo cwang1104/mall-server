@@ -6,8 +6,12 @@ require (
 	github.com/asim/go-micro/plugins/client/grpc/v4 v4.7.0
 	github.com/asim/go-micro/plugins/registry/consul/v4 v4.7.0
 	github.com/asim/go-micro/plugins/server/grpc/v4 v4.7.0
+	github.com/go-ini/ini v1.67.0
+	github.com/go-sql-driver/mysql v1.6.0
+	github.com/jinzhu/gorm v1.9.16
 	go-micro.dev/v4 v4.3.0
 	google.golang.org/protobuf v1.27.1
+	gopkg.in/ini.v1 v1.62.0
 )
 
 require (
@@ -34,6 +38,7 @@ require (
 	github.com/hashicorp/serf v0.9.5 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect

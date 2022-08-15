@@ -1,11 +1,10 @@
 package main
 
 import (
-	"mall_user/handler"
-	pb "mall_user/proto"
-
 	"go-micro.dev/v4"
 	log "go-micro.dev/v4/logger"
+	_ "mall_user/conf"
+	_ "mall_user/models"
 
 	grpcc "github.com/asim/go-micro/plugins/client/grpc/v4"
 	consul "github.com/asim/go-micro/plugins/registry/consul/v4"
@@ -31,7 +30,7 @@ func main() {
 	srv.Init()
 
 	// Register handler
-	pb.RegisterMalluserHandler(srv.Server(), new(handler.Malluser))
+	//pb.RegisterMalluserHandler(srv.Server(), new(handler.Malluser))
 	// Run service
 	if err := srv.Run(); err != nil {
 		log.Fatal(err)
