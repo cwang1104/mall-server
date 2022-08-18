@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package admin;
+
+option go_package = "./proto/admin;pbAdmin";
+
+service Admin {
+  rpc AdminLogin(AdminRequest)returns (AdminResponse);
+  rpc GetUserList(UserRequest)returns(UserResponse);
+}
+
+message UserRequest {
+  int32 current_page = 1;
+  int32 page_size = 2;
+}
+
+message UserResponse {
+  int32 code = 1;
+  string msg = 2;
+  repeated User users = 3;
+  int32 total = 4;
+  int32 current = 5;
+  int32 page_size = 6;
+}
+
+message User{
+  string email = 1;
+  string desc = 2;
+  string status = 3;
+  string created_time = 4;
+}
+
+message AdminRequest{
+  string user_name = 1;
+  string password = 2;
+}
+message AdminResponse {
+  int32 code = 1;
+  string msg = 2;
+  string user_name = 3;
+}

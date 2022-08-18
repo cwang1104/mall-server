@@ -1,0 +1,1 @@
+{"buildTargets":[".PHONY","build","docker","init","proto","test","tidy","update"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

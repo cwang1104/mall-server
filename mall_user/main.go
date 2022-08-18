@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"go-micro.dev/v4"
 	log "go-micro.dev/v4/logger"
 	_ "mall_user/conf"
 	_ "mall_user/models"
+	pbUser "mall_user/proto/user"
+	"mall_user/service/rpcUser"
 
 	grpcc "github.com/asim/go-micro/plugins/client/grpc/v4"
 	consul "github.com/asim/go-micro/plugins/registry/consul/v4"
@@ -29,6 +32,11 @@ func main() {
 	)
 	srv.Init()
 
+	err := pbUser.RegisterUserHandler(srv.Server(), new(rpcUser.User))
+	if err != nil {
+		fmt.Println("pbUser register new handler err", err)
+		return
+	}
 	// Register handler
 	//pb.RegisterMalluserHandler(srv.Server(), new(handler.Malluser))
 	// Run service

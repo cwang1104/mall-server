@@ -1,4 +1,4 @@
-package all_router
+package controller
 
 import (
 	"github.com/gin-gonic/gin"
@@ -12,7 +12,7 @@ func InitRouter(router *gin.Engine) {
 	product_group := router.Group("/product")
 	seckill_group := router.Group("/seckill")
 
-	user.Router(user_group)
+	userApi.Router(user_group)
 	product.Router(product_group)
 	seckill.Router(seckill_group)
 }
