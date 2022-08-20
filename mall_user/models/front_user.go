@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
 	Id          int       `json:"id" gorm:"primary_key"`
@@ -34,4 +36,19 @@ func FindUserByEmail(email string) *User {
 	var user User
 	db.Where("email = ?", email).First(&user)
 	return &user
+}
+
+func GetUserLists(pageSize, offsetNum int) (*[]User, error) {
+	var users []User
+	result := db.Limit(pageSize).Offset(offsetNum).Find(&users)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &users, nil
+}
+
+func GetUserCount() *int {
+	var count int
+	db.Find(&User{}).Count(&count)
+	return &count
 }

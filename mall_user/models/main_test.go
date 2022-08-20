@@ -1,35 +1,26 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
-	"mall_user/conf"
-)
-
-import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
 	"log"
 )
 
-var db *gorm.DB
+var testDB *gorm.DB
 
 //初始化数据库连接
-func init() {
+func testMain() {
 	var (
 		err                                  error
 		dbType, dbName, user, password, host string
 	)
-	//从ini配置文件中加载相应内容
-	sec, err := conf.Cfg.GetSection("database")
-	if err != nil {
-		log.Fatal(2, "Fail to get section 'database': %v", err)
-	}
 
-	dbType = sec.Key("TYPE").String()
-	dbName = sec.Key("NAME").String()
-	user = sec.Key("USER").String()
-	password = sec.Key("PASSWORD").String()
-	host = sec.Key("HOST").String()
+	dbType = "mysql"
+	dbName = "newmall"
+	user = "root"
+	password = "4524"
+	host = "127.0.0.1:3306"
 	//tablePrefix = sec.Key("TABLE_PREFIX").String()
 
 	database_link := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
@@ -54,8 +45,4 @@ func init() {
 
 	fmt.Println("--------数据库初始化成功--------")
 
-}
-
-func CloseDB() {
-	defer db.Close()
 }

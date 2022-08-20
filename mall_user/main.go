@@ -6,7 +6,9 @@ import (
 	log "go-micro.dev/v4/logger"
 	_ "mall_user/conf"
 	_ "mall_user/models"
+	pbAdmin "mall_user/proto/admin"
 	pbUser "mall_user/proto/user"
+	"mall_user/service/rpcAdmin"
 	"mall_user/service/rpcUser"
 
 	grpcc "github.com/asim/go-micro/plugins/client/grpc/v4"
@@ -35,6 +37,11 @@ func main() {
 	err := pbUser.RegisterUserHandler(srv.Server(), new(rpcUser.User))
 	if err != nil {
 		fmt.Println("pbUser register new handler err", err)
+		return
+	}
+	err = pbAdmin.RegisterAdminHandler(srv.Server(), new(rpcAdmin.Admin))
+	if err != nil {
+		fmt.Println("pbAdmin register new handler err", err)
 		return
 	}
 	// Register handler
