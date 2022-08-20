@@ -176,9 +176,10 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code":  resp.Code,
-		"msg":   resp.Msg,
-		"token": token,
+		"code":     resp.Code,
+		"msg":      resp.Msg,
+		"token":    token,
+		"username": resp.Email,
 	})
 	return
 }
