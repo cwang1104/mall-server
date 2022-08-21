@@ -1,11 +1,10 @@
 package main
 
 import (
-	"mall_product/handler"
-	pb "mall_product/proto"
-
 	"go-micro.dev/v4"
 	log "go-micro.dev/v4/logger"
+	pbProduct "mall_product/proto/product"
+	rpcProduct "mall_product/rpc/product"
 
 	grpcc "github.com/asim/go-micro/plugins/client/grpc/v4"
 	consul "github.com/asim/go-micro/plugins/registry/consul/v4"
@@ -27,11 +26,9 @@ func main() {
 		micro.Name(service),
 		micro.Version(version),
 	)
-	srv.Init()
+	//srv.Init()
 
-	// Register handler
-	pb.RegisterMallproductHandler(srv.Server(), new(handler.Mallproduct))
-	// Run service
+	pbProduct.RegisterProductsHandler(srv.Server(), new(rpcProduct.Product))
 	if err := srv.Run(); err != nil {
 		log.Fatal(err)
 	}

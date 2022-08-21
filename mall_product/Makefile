@@ -8,7 +8,8 @@ init:
 
 .PHONY: proto
 proto:
-	@protoc --proto_path=. --micro_out=. --go_out=:. proto/mall_product.proto
+	@protoc --proto_path=. --micro_out=. --go_out=:. proto/product/product.proto
+	@protoc --proto_path=. --micro_out=. --go_out=:. proto/seckill/seckill.proto
 
 .PHONY: update
 update:

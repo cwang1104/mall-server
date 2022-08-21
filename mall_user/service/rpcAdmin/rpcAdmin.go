@@ -61,8 +61,9 @@ func (a *Admin) GetUserList(_ context.Context, in *pbAdmin.UserRequest, out *pbA
 
 	//将数据库格式信息转换为grpc定义的数据类型并返回
 	pbUsers := []*pbAdmin.User{}
-	pb_user := pbAdmin.User{}
+
 	for _, user := range *userLists {
+		pb_user := pbAdmin.User{}
 		pb_user.Email = user.Email
 		pb_user.Status = strconv.Itoa(user.Status)
 		pb_user.Desc = user.Desc
