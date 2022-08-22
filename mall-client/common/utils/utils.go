@@ -21,3 +21,11 @@ func StrToInt32(str string) int32 {
 	}
 	return int32(n)
 }
+
+func StrToFloat32(str string) float32 {
+	n, err := strconv.ParseFloat(str, 64)
+	if err != nil {
+		return 0
+	}
+	return float32(n)
+}
