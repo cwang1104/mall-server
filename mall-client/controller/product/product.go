@@ -148,6 +148,53 @@ func ProductDel(c *gin.Context) {
 
 }
 func ProductDoEdit(c *gin.Context) {
+	id := c.PostForm("id")
+	name := c.PostForm("name")
+	price := c.PostForm("price")
+	num := c.PostForm("num")
+	unit := c.PostForm("unit")
+	desc := c.PostForm("desc")
+
+	pbReqParams := pbProduct.ProductEditRequest{
+		Id:    utils.StrToInt32(id),
+		Name:  name,
+		Price: utils.StrToFloat32(price),
+		Num:   utils.StrToInt32(num),
+		Unit:  unit,
+		Desc:  desc,
+	}
+	file, err := c.FormFile("pic")
+
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		unix_int64 := time.Now().Unix()
+		unix_str := strconv.FormatInt(unix_int64, 10)
+		file_path := "upload/" + unix_str + file.Filename
+		c.SaveUploadedFile(file, file_path)
+		pbReqParams.Picture = file_path
+	}
+	consulReq := consul.NewRegistry()
+	service := micro.NewService(
+		micro.Registry(consulReq),
+		micro.Client(grpcc.NewClient()),
+	)
+
+	grpcserver := pbProduct.NewProductsService("mall_product", service.Client())
+	resp, err := grpcserver.ProductDoEdit(context.Background(), &pbReqParams)
+
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 500,
+			"msg":  "grpc调用错误" + err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": resp.Code,
+		"msg":  resp.Msg,
+	})
 
 }
 
@@ -180,3 +227,5 @@ func ProductToEdit(c *gin.Context) {
 		"img_base64": utils.Img2Base64(resp.Product.Picture),
 	})
 }
+
+

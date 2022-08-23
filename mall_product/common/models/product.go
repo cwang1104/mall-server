@@ -36,5 +36,12 @@ func GetProductById(id int) (*Product, error) {
 	var product Product
 	result := db.Where("id = ?", id).First(&product)
 	return &product, result.Error
+}
 
+func GetProduct(product *Product) {
+	db.First(product)
+}
+
+func UpdateProduct(product *Product, id int32) error {
+	return db.Where("id = ?", int(id)).Find(&Product{}).Update(product).Error
 }

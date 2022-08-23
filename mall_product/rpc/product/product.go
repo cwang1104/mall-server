@@ -29,6 +29,7 @@ func (p *Product) ProductList(_ context.Context, in *pbProduct.ProductsRequest, 
 		out.Msg = "没有查询到数据" + err.Error()
 		return nil
 	}
+
 	products_resp := []*pbProduct.Product{}
 
 	for _, product := range *products {
@@ -123,5 +124,45 @@ func (p *Product) ProductToEdit(_ context.Context, in *pbProduct.ProductToEditRe
 	out.Code = 200
 	out.Msg = "查询成功"
 	out.Product = product_rep
+	return nil
+}
+
+func (p *Product) ProductDoEdit(_ context.Context, in *pbProduct.ProductEditRequest, out *pbProduct.ProductEditResponse) error {
+	id := in.Id
+	name := in.Name
+	price := in.Price
+	num := in.Num
+	unit := in.Unit
+	pic_path := in.Picture
+	desc := in.Desc
+
+	product := models.Product{}
+	if len(pic_path) < 1 {
+		product = models.Product{
+			Name:  name,
+			Price: price,
+			Num:   int(num),
+			Unit:  unit,
+			Desc:  desc,
+		}
+	}
+
+	product = models.Product{
+		Name:    name,
+		Price:   price,
+		Num:     int(num),
+		Unit:    unit,
+		Desc:    desc,
+		Picture: pic_path,
+	}
+	err := models.UpdateProduct(&product, id)
+	if err != nil {
+		out.Code = 500
+		out.Msg = "更新商品失败"
+		return nil
+	}
+
+	out.Code = 200
+	out.Msg = "更新商品成功"
 	return nil
 }
