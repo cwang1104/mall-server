@@ -45,3 +45,15 @@ func GetProduct(product *Product) {
 func UpdateProduct(product *Product, id int32) error {
 	return db.Where("id = ?", int(id)).Find(&Product{}).Update(product).Error
 }
+
+func GetProducts() (*[]Product, error) {
+	var products []Product
+	result := db.Find(&products)
+	return &products, result.Error
+}
+
+func GetPordictsById(id int) (*[]Product, error) {
+	products_no := []Product{}
+	result := db.Where("id != ?", id).Find(&products_no)
+	return &products_no, result.Error
+}
