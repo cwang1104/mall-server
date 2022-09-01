@@ -98,7 +98,7 @@ func (s *Seckill) SecKillAdd(_ context.Context, in *pbSeckill.SecKill, out *pbSe
 
 	time_start_time, _ := time.Parse("2006-01-02 15:04:05", start_time)
 	time_end_time, _ := time.Parse("2006-01-02 15:04:05", end_time)
-	seckill := models.SecKills{
+	seckill := models.Seckills{
 		Name:        name,
 		Price:       price,
 		Num:         int(num),
@@ -124,7 +124,7 @@ func (s *Seckill) SecKillAdd(_ context.Context, in *pbSeckill.SecKill, out *pbSe
 func (s *Seckill) SecKillDel(_ context.Context, in *pbSeckill.SecKillDelRequest, out *pbSeckill.SecKillResponse) error {
 	id := in.Id
 	// 删除数据库数据操作
-	seckill := models.SecKills{
+	seckill := models.Seckills{
 		Id: int(id),
 	}
 	err := models.DelSeckill(&seckill)
@@ -143,7 +143,7 @@ func (s *Seckill) SecKillDel(_ context.Context, in *pbSeckill.SecKillDelRequest,
 func (s *Seckill) SecKillToEdit(_ context.Context, in *pbSeckill.SecKillDelRequest, out *pbSeckill.SecKillToEditResponse) error {
 	id := in.Id
 
-	seckill := models.SecKills{
+	seckill := models.Seckills{
 		Id: int(id),
 	}
 
@@ -195,7 +195,7 @@ func (s *Seckill) SecKillDoEdit(_ context.Context, in *pbSeckill.SecKill, out *p
 
 	time_start_time, _ := time.Parse("2006-01-02 15:04:05", start_time)
 	time_end_time, _ := time.Parse("2006-01-02 15:04:05", end_time)
-	seckill := models.SecKills{
+	seckill := models.Seckills{
 		Name:      name,
 		Price:     price,
 		Num:       int(num),

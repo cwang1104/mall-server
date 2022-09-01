@@ -2,6 +2,7 @@ package seckill
 
 import (
 	"context"
+	"fmt"
 	grpcc "github.com/asim/go-micro/plugins/client/grpc/v4"
 	"github.com/asim/go-micro/plugins/registry/consul/v4"
 	"github.com/gin-gonic/gin"
@@ -244,6 +245,8 @@ func GetFrontSeckillList(c *gin.Context) {
 	for _, seckill := range resp.SeckillList {
 		seckill.Picture = utils.Img2Base64(seckill.Picture)
 	}
+
+	fmt.Printf("-------------------\n%+v", resp.SeckillList)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code":         resp.Code,

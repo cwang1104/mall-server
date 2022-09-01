@@ -12,10 +12,10 @@ type Product struct {
 	Desc        string    `json:"desc"`
 	CreatedTime time.Time `json:"created_time"`
 
-	SecKills []SecKills
+	SecKills []Seckills
 }
 
-type SecKills struct {
+type Seckills struct {
 	Id        int       `json:"id"`
 	Name      string    `json:"name"`
 	Price     float32   `json:"price"`
