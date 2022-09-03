@@ -100,6 +100,7 @@ func (u *User) UserLogin(_ context.Context, in *pbUser.UserRequest, out *pbUser.
 		out.Code = 200
 		out.Msg = "登录成功"
 		out.Email = user.Email
+		out.Uid = int32(user.Id)
 	}
 	return nil
 }

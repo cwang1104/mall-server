@@ -1,6 +1,6 @@
 syntax = "proto3";
 package seckill;
-option go_package = "./proto/seckill;pbSeckill";
+option go_package = "./proto/seckillm;pbSeckill";
 
 
 service SecKills {

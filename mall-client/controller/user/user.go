@@ -167,7 +167,7 @@ func UserLogin(c *gin.Context) {
 	}
 
 	//用户服务端验证通过，生成token返回前端
-	token, err := utils.GenToken(req.Email, utils.UserExpireDuration, utils.UserSecretKey)
+	token, err := utils.GenToken(int(resp.Uid), req.Email, utils.UserExpireDuration, utils.UserSecretKey)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": "500",

@@ -44,12 +44,6 @@ func ValidAdminToken(c *gin.Context) {
 		return
 	}
 
-	//c.JSON(http.StatusOK, gin.H{
-	//	"code":  200,
-	//	"msg":   "ok",
-	//	"data":  claims,
-	//	"token": accessToken,
-	//})
 	c.Set("username", claims.UserName)
 	c.Next()
 }
@@ -90,12 +84,6 @@ func ValidUserToken(c *gin.Context) {
 		return
 	}
 
-	//c.JSON(http.StatusOK, gin.H{
-	//	"code":  200,
-	//	"msg":   "ok",
-	//	"data":  claims,
-	//	"token": accessToken,
-	//})
-	c.Set("email", claims.UserName)
+	c.Set("user_id", claims.UserId)
 	c.Next()
 }

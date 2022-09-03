@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.26.0
 // 	protoc        v3.21.4
-// source: proto/seckill/seckill.proto
+// source: proto/seckillm/seckillm.proto
 
 package pbSeckill
 
@@ -82,7 +82,7 @@ type FrongSecKillDetailResponse struct {
 
 	Code    int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Msg     string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
-	Seckill *SecKill `protobuf:"bytes,3,opt,name=seckill,proto3" json:"seckill,omitempty"`
+	Seckill *SecKill `protobuf:"bytes,3,opt,name=seckillm,proto3" json:"seckillm,omitempty"`
 }
 
 func (x *FrongSecKillDetailResponse) Reset() {
@@ -232,7 +232,7 @@ type SecKillToEditResponse struct {
 
 	Code       int32      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Msg        string     `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
-	Seckill    *SecKill   `protobuf:"bytes,3,opt,name=seckill,proto3" json:"seckill,omitempty"`
+	Seckill    *SecKill   `protobuf:"bytes,3,opt,name=seckillm,proto3" json:"seckillm,omitempty"`
 	ProductsNo []*Product `protobuf:"bytes,4,rep,name=products_no,json=productsNo,proto3" json:"products_no,omitempty"`
 }
 
@@ -990,42 +990,42 @@ func file_proto_seckill_seckill_proto_rawDescGZIP() []byte {
 
 var file_proto_seckill_seckill_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_proto_seckill_seckill_proto_goTypes = []interface{}{
-	(*FrontSecKillRequest)(nil),        // 0: seckill.FrontSecKillRequest
-	(*FrongSecKillDetailResponse)(nil), // 1: seckill.FrongSecKillDetailResponse
-	(*FrontSecKillResponse)(nil),       // 2: seckill.FrontSecKillResponse
-	(*SecKillToEditResponse)(nil),      // 3: seckill.SecKillToEditResponse
-	(*SecKillDelRequest)(nil),          // 4: seckill.SecKillDelRequest
-	(*SecKillResponse)(nil),            // 5: seckill.SecKillResponse
-	(*ProductRequest)(nil),             // 6: seckill.ProductRequest
-	(*ProductResponse)(nil),            // 7: seckill.ProductResponse
-	(*Product)(nil),                    // 8: seckill.Product
-	(*SecKillsRequest)(nil),            // 9: seckill.SecKillsRequest
-	(*SecKillsResponse)(nil),           // 10: seckill.SecKillsResponse
-	(*SecKill)(nil),                    // 11: seckill.SecKill
+	(*FrontSecKillRequest)(nil),        // 0: seckillm.FrontSecKillRequest
+	(*FrongSecKillDetailResponse)(nil), // 1: seckillm.FrongSecKillDetailResponse
+	(*FrontSecKillResponse)(nil),       // 2: seckillm.FrontSecKillResponse
+	(*SecKillToEditResponse)(nil),      // 3: seckillm.SecKillToEditResponse
+	(*SecKillDelRequest)(nil),          // 4: seckillm.SecKillDelRequest
+	(*SecKillResponse)(nil),            // 5: seckillm.SecKillResponse
+	(*ProductRequest)(nil),             // 6: seckillm.ProductRequest
+	(*ProductResponse)(nil),            // 7: seckillm.ProductResponse
+	(*Product)(nil),                    // 8: seckillm.Product
+	(*SecKillsRequest)(nil),            // 9: seckillm.SecKillsRequest
+	(*SecKillsResponse)(nil),           // 10: seckillm.SecKillsResponse
+	(*SecKill)(nil),                    // 11: seckillm.SecKill
 }
 var file_proto_seckill_seckill_proto_depIdxs = []int32{
-	11, // 0: seckill.FrongSecKillDetailResponse.seckill:type_name -> seckill.SecKill
-	11, // 1: seckill.FrontSecKillResponse.seckill_list:type_name -> seckill.SecKill
-	11, // 2: seckill.SecKillToEditResponse.seckill:type_name -> seckill.SecKill
-	8,  // 3: seckill.SecKillToEditResponse.products_no:type_name -> seckill.Product
-	8,  // 4: seckill.ProductResponse.products:type_name -> seckill.Product
-	11, // 5: seckill.SecKillsResponse.seckills:type_name -> seckill.SecKill
-	9,  // 6: seckill.SecKills.SecKillList:input_type -> seckill.SecKillsRequest
-	6,  // 7: seckill.SecKills.GetProducts:input_type -> seckill.ProductRequest
-	11, // 8: seckill.SecKills.SecKillAdd:input_type -> seckill.SecKill
-	4,  // 9: seckill.SecKills.SecKillDel:input_type -> seckill.SecKillDelRequest
-	4,  // 10: seckill.SecKills.SecKillToEdit:input_type -> seckill.SecKillDelRequest
-	11, // 11: seckill.SecKills.SecKillDoEdit:input_type -> seckill.SecKill
-	0,  // 12: seckill.SecKills.FrontSecKillList:input_type -> seckill.FrontSecKillRequest
-	4,  // 13: seckill.SecKills.FrontSecKillDetail:input_type -> seckill.SecKillDelRequest
-	10, // 14: seckill.SecKills.SecKillList:output_type -> seckill.SecKillsResponse
-	7,  // 15: seckill.SecKills.GetProducts:output_type -> seckill.ProductResponse
-	5,  // 16: seckill.SecKills.SecKillAdd:output_type -> seckill.SecKillResponse
-	5,  // 17: seckill.SecKills.SecKillDel:output_type -> seckill.SecKillResponse
-	3,  // 18: seckill.SecKills.SecKillToEdit:output_type -> seckill.SecKillToEditResponse
-	5,  // 19: seckill.SecKills.SecKillDoEdit:output_type -> seckill.SecKillResponse
-	2,  // 20: seckill.SecKills.FrontSecKillList:output_type -> seckill.FrontSecKillResponse
-	1,  // 21: seckill.SecKills.FrontSecKillDetail:output_type -> seckill.FrongSecKillDetailResponse
+	11, // 0: seckillm.FrongSecKillDetailResponse.seckillm:type_name -> seckillm.SecKill
+	11, // 1: seckillm.FrontSecKillResponse.seckill_list:type_name -> seckillm.SecKill
+	11, // 2: seckillm.SecKillToEditResponse.seckillm:type_name -> seckillm.SecKill
+	8,  // 3: seckillm.SecKillToEditResponse.products_no:type_name -> seckillm.Product
+	8,  // 4: seckillm.ProductResponse.products:type_name -> seckillm.Product
+	11, // 5: seckillm.SecKillsResponse.seckills:type_name -> seckillm.SecKill
+	9,  // 6: seckillm.SecKills.SecKillList:input_type -> seckillm.SecKillsRequest
+	6,  // 7: seckillm.SecKills.GetProducts:input_type -> seckillm.ProductRequest
+	11, // 8: seckillm.SecKills.SecKillAdd:input_type -> seckillm.SecKill
+	4,  // 9: seckillm.SecKills.SecKillDel:input_type -> seckillm.SecKillDelRequest
+	4,  // 10: seckillm.SecKills.SecKillToEdit:input_type -> seckillm.SecKillDelRequest
+	11, // 11: seckillm.SecKills.SecKillDoEdit:input_type -> seckillm.SecKill
+	0,  // 12: seckillm.SecKills.FrontSecKillList:input_type -> seckillm.FrontSecKillRequest
+	4,  // 13: seckillm.SecKills.FrontSecKillDetail:input_type -> seckillm.SecKillDelRequest
+	10, // 14: seckillm.SecKills.SecKillList:output_type -> seckillm.SecKillsResponse
+	7,  // 15: seckillm.SecKills.GetProducts:output_type -> seckillm.ProductResponse
+	5,  // 16: seckillm.SecKills.SecKillAdd:output_type -> seckillm.SecKillResponse
+	5,  // 17: seckillm.SecKills.SecKillDel:output_type -> seckillm.SecKillResponse
+	3,  // 18: seckillm.SecKills.SecKillToEdit:output_type -> seckillm.SecKillToEditResponse
+	5,  // 19: seckillm.SecKills.SecKillDoEdit:output_type -> seckillm.SecKillResponse
+	2,  // 20: seckillm.SecKills.FrontSecKillList:output_type -> seckillm.FrontSecKillResponse
+	1,  // 21: seckillm.SecKills.FrontSecKillDetail:output_type -> seckillm.FrongSecKillDetailResponse
 	14, // [14:22] is the sub-list for method output_type
 	6,  // [6:14] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name

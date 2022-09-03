@@ -54,7 +54,7 @@ func AdminLogin(c *gin.Context) {
 		return
 	}
 
-	admin_token, err1 := utils.GenToken(resp.UserName, utils.AdminExpireDuration, utils.AdminSecretKey)
+	admin_token, err1 := utils.GenToken(1, resp.UserName, utils.AdminExpireDuration, utils.AdminSecretKey)
 	if err1 != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 500,

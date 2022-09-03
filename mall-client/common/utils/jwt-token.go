@@ -19,13 +19,14 @@ type UserTokenClaims struct {
 	jwt.StandardClaims //jwt标准字段
 	//自定义用户信息
 	UserName string `json:"user_name"`
+	UserId   int    `json:"user_id"`
 }
 
 type Admin struct {
 }
 
 // 生成token
-func GenToken(UserName string, expired time.Duration,
+func GenToken(userId int, UserName string, expired time.Duration,
 	secret_key []byte) (string, error) {
 	user := UserTokenClaims{
 		StandardClaims: jwt.StandardClaims{
@@ -34,6 +35,7 @@ func GenToken(UserName string, expired time.Duration,
 			Issuer:    issuer,
 		},
 		UserName: UserName,
+		UserId:   userId,
 	}
 
 	//生成token

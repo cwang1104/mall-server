@@ -1,0 +1,21 @@
+syntax = "proto3";
+package seckill;
+option go_package = "./proto/miaosha;pbMiaoSha";
+
+
+service MiaoSha {
+    rpc FrontMiaoSha (MiaoshaRequest) returns (MiaoShaResponse);
+
+}
+
+message MiaoshaRequest {
+    int32 id = 1;
+    string front_user_email = 2;
+    int32 UserID = 3;
+}
+
+message MiaoShaResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+

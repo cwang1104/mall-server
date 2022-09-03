@@ -1,8 +1,8 @@
 package main
 
 import (
-	"mall_seckill/handler"
-	pb "mall_seckill/proto"
+	pbMiaosha "mall_seckill/proto/miaosha"
+	rpcMiaoSha "mall_seckill/rpc/seckill"
 
 	grpcc "github.com/asim/go-micro/plugins/client/grpc/v4"
 	consul "github.com/asim/go-micro/plugins/registry/consul/v4"
@@ -29,7 +29,7 @@ func main() {
 	srv.Init()
 
 	// Register handler
-	pb.RegisterMallseckillHandler(srv.Server(), new(handler.Mallseckill))
+	pbMiaosha.RegisterMiaoShaHandler(srv.Server(), new(rpcMiaoSha.MiaoSha))
 	// Run service
 	if err := srv.Run(); err != nil {
 		log.Fatal(err)

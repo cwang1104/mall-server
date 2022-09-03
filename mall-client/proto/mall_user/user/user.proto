@@ -26,4 +26,5 @@ message UserResponse {
   int32 code = 1;
   string msg = 2;
   string email = 3;
+  int32 uid = 4;
 }
