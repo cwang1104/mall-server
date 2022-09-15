@@ -2,10 +2,18 @@ package rpcMiaoSha
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/streadway/amqp"
 	"mall_seckill/common/models"
+	"mall_seckill/common/redis"
+	"mall_seckill/common/utils"
 	pbMiaoSha "mall_seckill/proto/miaosha"
+	"strconv"
 	"time"
 )
+
+const urls = "amqp://test01:123456@127.0.0.1:5672//test"
 
 type MiaoSha struct {
 	pbMiaoSha.MiaoShaHandler
@@ -85,4 +93,183 @@ func (s *MiaoSha) FrontMiaoSha(_ context.Context, in *pbMiaoSha.MiaoshaRequest, 
 	out.Code = 200
 	out.Msg = "下单成功"
 	return nil
+}
+
+func init() {
+	conn, err := amqp.Dial(urls)
+	if err != nil {
+		fmt.Println("dial amqp conn", err)
+	}
+
+	ch, err_ch := conn.Channel()
+	fmt.Println(err_ch)
+	defer ch.Close()
+
+	err = ch.Qos(1, 0, false)
+	fmt.Println(err)
+
+	deliveries, err := ch.Consume("mall.web.Queue", "order_consumer", false, false, false, false, nil)
+	fmt.Println(err)
+	for delivery := range deliveries {
+		//fmt.Println(delivery.ContentType)
+		//fmt.Println(string(delivery.Body))
+		//delivery.Ack(true)
+		fmt.Println("接收到任务")
+		go Orderapply(delivery)
+	}
+}
+
+func Orderapply(delivery amqp.Delivery) {
+	body := delivery.Body
+
+	var reqData map[string]interface{}
+	_ = json.Unmarshal(body, &reqData)
+
+	id, _ := strconv.Atoi(reqData["id"].(string))
+	userId, _ := strconv.Atoi(reqData["user_id"].(string))
+
+	//避免重复消费
+	err := models.OrderExist(userId, id) //err== nil 存在
+	if err == nil {
+		delivery.Ack(true)
+		return
+	}
+
+	now_time := time.Now().Unix()
+	result, seckill := models.GetSeckillById(int32(id))
+	if result.Error != nil {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "下单失败",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+	}
+
+	if seckill.StartTime.Unix() >= now_time {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "抢购还未开始",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+
+	}
+
+	if seckill.EndTime.Unix() < now_time {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "抢购已经结束",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+	}
+
+	num_result := result.Where("num > 0").Find(seckill)
+	if num_result.Error != nil {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "已经抢完",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+	}
+
+	//获取用户信息
+
+	ret := models.OrderResult(userId, id)
+	if ret.Error == nil {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "只能买一个",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+	}
+
+	ret_up := result.Update("num", seckill.Num-1)
+
+	//生成订单
+	order := models.Order{
+		OrderNum:    1,
+		UserId:      userId,
+		ActivityId:  id,
+		PayStatus:   1,
+		CreatedTime: time.Now(),
+	}
+	err = models.AddOrderInfo(&order)
+	if err != nil {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "创建订单失败",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+	}
+
+	if ret_up.Error != nil {
+		delivery.Ack(true)
+		map_data := map[string]interface{}{
+			"code": 500,
+			"msg":  "扣减库存失败",
+		}
+		is_ok, _ := redis.RedisConn.Do("GET", userId)
+		if is_ok == "ok" {
+			return
+		}
+
+		redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+		return
+	}
+
+	//成功
+	delivery.Ack(true)
+	map_data := map[string]interface{}{
+		"code": 200,
+		"msg":  "下单成功",
+	}
+	is_ok, _ := redis.RedisConn.Do("GET", userId)
+	if is_ok == "ok" {
+		return
+	}
+
+	redis.RedisConn.Do("SET", userId, utils.MapToStr(map_data))
+	return
+
 }

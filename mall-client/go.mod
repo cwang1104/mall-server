@@ -6,7 +6,9 @@ require (
 	github.com/asim/go-micro/plugins/client/grpc/v4 v4.7.0
 	github.com/asim/go-micro/plugins/registry/consul/v4 v4.7.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/garyburd/redigo v1.6.4
 	github.com/gin-gonic/gin v1.8.1
+	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.8.0
 	go-micro.dev/v4 v4.3.0
 )

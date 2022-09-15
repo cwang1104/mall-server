@@ -219,7 +219,7 @@ func ProductDoEdit(c *gin.Context) {
 }
 
 func GetFrontSeckillList(c *gin.Context) {
-
+	fmt.Println("-----get front list --------")
 	currentPage := c.DefaultQuery("currentPage", "1")
 	pageSize := c.DefaultQuery("pageSize", "8")
 
@@ -245,8 +245,6 @@ func GetFrontSeckillList(c *gin.Context) {
 	for _, seckill := range resp.SeckillList {
 		seckill.Picture = utils.Img2Base64(seckill.Picture)
 	}
-
-	fmt.Printf("-------------------\n%+v", resp.SeckillList)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code":         resp.Code,
@@ -283,8 +281,8 @@ func SecKillDetail(c *gin.Context) {
 
 	resp.Seckill.Picture = utils.Img2Base64(resp.Seckill.Picture)
 	c.JSON(http.StatusOK, gin.H{
-		"code":     resp.Code,
-		"msg":      resp.Msg,
-		"seckillm": resp.Seckill,
+		"code":    resp.Code,
+		"msg":     resp.Msg,
+		"seckill": resp.Seckill,
 	})
 }

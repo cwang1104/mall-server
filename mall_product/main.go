@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"go-micro.dev/v4"
 	log "go-micro.dev/v4/logger"
 	pbProduct "mall_product/proto/product"
@@ -28,10 +29,18 @@ func main() {
 		micro.Name(service),
 		micro.Version(version),
 	)
-	//srv.Init()
+	srv.Init()
 
-	pbProduct.RegisterProductsHandler(srv.Server(), new(rpcProduct.Product))
+	err := pbProduct.RegisterProductsHandler(srv.Server(), new(rpcProduct.Product))
+	if err != nil {
+		fmt.Println("pbProduct register new handler err", err)
+		return
+	}
 	pbSeckill.RegisterSecKillsHandler(srv.Server(), new(rpcSeckill.Seckill))
+	if err != nil {
+		fmt.Println("pbSeckill register new handler err", err)
+		return
+	}
 	if err := srv.Run(); err != nil {
 		log.Fatal(err)
 	}

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -51,4 +52,19 @@ func GetUserCount() *int {
 	var count int
 	db.Find(&User{}).Count(&count)
 	return &count
+}
+
+func AddUserInfo() {
+	a := 12345
+	for i := 0; i < 100; i++ {
+		a = a + 1
+		user := User{
+			Email:       fmt.Sprintf("%d@qq.com", a),
+			Password:    "c0264d69d070404c22585b842fb642bc",
+			Desc:        "测试用户",
+			Status:      1,
+			CreatedTime: time.Now(),
+		}
+		db.Create(&user)
+	}
 }

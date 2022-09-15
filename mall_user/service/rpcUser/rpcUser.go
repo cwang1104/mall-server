@@ -82,6 +82,7 @@ func (u *User) UserSendEmail(_ context.Context, in *pbUser.UserMailRequest, out 
 }
 
 func (u *User) UserLogin(_ context.Context, in *pbUser.UserRequest, out *pbUser.UserResponse) error {
+
 	email := in.Email
 	password := in.Password
 	if !models.EmaiIsExist(email) {

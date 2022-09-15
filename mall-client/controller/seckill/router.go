@@ -15,10 +15,11 @@ func Router(router *gin.RouterGroup) {
 	router.POST("/seckill_do_edit", middleWare.ValidAdminToken, ProductDoEdit)
 
 	// 前端列表
-	router.GET("/front/get_seckill_list", middleWare.ValidUserToken, GetFrontSeckillList)
+	router.GET("/front/get_seckill_list", GetFrontSeckillList)
 	// 前端详情
 	router.GET("/front/seckill_detail", middleWare.ValidUserToken, SecKillDetail)
 
 	//秒杀接口
 	router.POST("/front/seckill", middleWare.ValidUserToken, SeckillM)
+	router.GET("/front/get_seckill_result", middleWare.ValidUserToken, GetSeckillResult)
 }

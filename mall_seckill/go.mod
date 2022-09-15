@@ -6,9 +6,11 @@ require (
 	github.com/asim/go-micro/plugins/client/grpc/v4 v4.7.0
 	github.com/asim/go-micro/plugins/registry/consul/v4 v4.7.0
 	github.com/asim/go-micro/plugins/server/grpc/v4 v4.7.0
+	github.com/garyburd/redigo v1.6.4
 	github.com/go-ini/ini v1.67.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/jinzhu/gorm v1.9.16
+	github.com/streadway/amqp v1.0.0
 	go-micro.dev/v4 v4.3.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/ini.v1 v1.62.0
